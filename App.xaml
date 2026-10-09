@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TravelSurvey.App" x:Name="_SurveyApplication_">
+    <Application.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="#203D3A" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="TextColor" Value="#203D3A" />
+                <Setter Property="PlaceholderColor" Value="#70857F" />
+                <Setter Property="BackgroundColor" Value="#F2F7F4" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style TargetType="Editor">
+                <Setter Property="TextColor" Value="#203D3A" />
+                <Setter Property="PlaceholderColor" Value="#70857F" />
+                <Setter Property="BackgroundColor" Value="#F2F7F4" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="MinimumHeightRequest" Value="52" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+            <Style TargetType="RadioButton">
+                <Setter Property="TextColor" Value="#203D3A" />
+            </Style>
+            <Style TargetType="Picker">
+                <Setter Property="TextColor" Value="#203D3A" />
+                <Setter Property="TitleColor" Value="#70857F" />
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="TextColor" Value="#203D3A" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
