@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvoyMaster.SearchPage" Title="Поиск мастера">
+  <Grid Padding="20" RowDefinitions="Auto,Auto,Auto,Auto,Auto,*" ColumnDefinitions="*" RowSpacing="12">
+    <Label Grid.Row="0" Grid.Column="0" Text="Екатеринбург · учебный пример" FontSize="14" />
+    <Picker x:Name="ServicePicker" Grid.Row="1" Grid.Column="0" Title="Услуга" SelectedIndexChanged="OnSearchChanged">
+      <Picker.Items><x:String>Все услуги</x:String><x:String>Сантехника</x:String><x:String>Электрика</x:String><x:String>Уборка</x:String><x:String>Сборка мебели</x:String></Picker.Items>
+    </Picker>
+    <Entry x:Name="SearchEntry" Grid.Row="2" Grid.Column="0" Placeholder="Имя мастера или услуга" MaxLength="50" TextChanged="OnSearchChanged" />
+    <HorizontalStackLayout Grid.Row="3" Grid.Column="0" Spacing="10">
+      <CheckBox x:Name="AvailableCheck" IsChecked="True" Color="#2563EB" CheckedChanged="OnSearchChanged" />
+      <Label Text="Только свободные" VerticalOptions="Center" />
+    </HorizontalStackLayout>
+    <Button Grid.Row="4" Grid.Column="0" Text="Мои заявки" Clicked="OnOrdersClicked" />
+    <CollectionView x:Name="MastersList" Grid.Row="5" Grid.Column="0" SelectionMode="Single" SelectionChanged="OnMasterSelected">
+      <CollectionView.EmptyView><Label Text="Мастера не найдены. Измените услугу или строку поиска." Padding="8" /></CollectionView.EmptyView>
+      <CollectionView.ItemTemplate><DataTemplate x:DataType="{x:Null}">
+        <VerticalStackLayout Padding="8,16" Spacing="6">
+          <Label Text="{Binding Name}" FontSize="21" FontAttributes="Bold" />
+          <Label Text="{Binding Service}" />
+          <Label Text="{Binding Price, StringFormat='Стоимость: {0} ₽'}" TextColor="#2563EB" />
+          <BoxView HeightRequest="1" Color="#CBD5E1" Margin="0,8,0,0" />
+        </VerticalStackLayout>
+      </DataTemplate></CollectionView.ItemTemplate>
+    </CollectionView>
+  </Grid>
+</ContentPage>

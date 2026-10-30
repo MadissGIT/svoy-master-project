@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MovieSurvey.App">
+  <Application.Resources>
+    <Style TargetType="ContentPage"><Setter Property="BackgroundColor" Value="#F8FAFC" /></Style>
+    <Style TargetType="Label"><Setter Property="TextColor" Value="#1E293B" /><Setter Property="FontSize" Value="16" /></Style>
+    <Style TargetType="Entry"><Setter Property="TextColor" Value="#1E293B" /><Setter Property="PlaceholderColor" Value="#64748B" /></Style>
+    <Style TargetType="Editor"><Setter Property="TextColor" Value="#1E293B" /><Setter Property="PlaceholderColor" Value="#64748B" /></Style>
+    <Style TargetType="Picker"><Setter Property="TextColor" Value="#1E293B" /><Setter Property="TitleColor" Value="#64748B" /></Style>
+    <Style TargetType="DatePicker"><Setter Property="TextColor" Value="#1E293B" /></Style>
+    <Style TargetType="TimePicker"><Setter Property="TextColor" Value="#1E293B" /></Style>
+    <Style TargetType="Button"><Setter Property="BackgroundColor" Value="#6750A4" /><Setter Property="TextColor" Value="White" /><Setter Property="CornerRadius" Value="10" /><Setter Property="MinimumHeightRequest" Value="48" /></Style>
+    <Style TargetType="NavigationPage"><Setter Property="BarBackgroundColor" Value="#6750A4" /><Setter Property="BarTextColor" Value="White" /></Style>
+  </Application.Resources>
+</Application>

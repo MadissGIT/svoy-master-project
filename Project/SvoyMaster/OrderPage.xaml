@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvoyMaster.OrderPage" Title="Детали заявки">
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="14">
+      <Label x:Name="TitleLabel" FontSize="25" FontAttributes="Bold" />
+      <Label x:Name="DetailsLabel" />
+      <Label x:Name="StatusLabel" FontSize="20" FontAttributes="Bold" />
+      <Label x:Name="PaymentLabel" />
+      <Label x:Name="HintLabel" FontSize="14" />
+      <Button x:Name="AcceptButton" Text="Принять заявку" Clicked="OnAcceptClicked" />
+      <Button x:Name="RejectButton" Text="Отклонить заявку" Clicked="OnRejectClicked" BackgroundColor="#64748B" />
+      <Button x:Name="FinishButton" Text="Работа выполнена" Clicked="OnFinishClicked" />
+      <Button x:Name="ConfirmButton" Text="Подтвердить выполнение" Clicked="OnConfirmClicked" />
+      <Button x:Name="CancelButton" Text="Отменить заявку" Clicked="OnCancelClicked" BackgroundColor="#64748B" />
+      <Button Text="К выбору роли" Clicked="OnStartClicked" BackgroundColor="#E2E8F0" TextColor="#1E293B" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

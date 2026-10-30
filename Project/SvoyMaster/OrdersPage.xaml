@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvoyMaster.OrdersPage" Title="Мои заявки">
+  <Grid Padding="20" RowDefinitions="Auto,*" ColumnDefinitions="*" RowSpacing="12">
+    <Label Grid.Row="0" Grid.Column="0" Text="Нажмите на заявку, чтобы посмотреть детали" FontSize="16" />
+    <CollectionView x:Name="OrdersList" Grid.Row="1" Grid.Column="0" SelectionMode="Single" SelectionChanged="OnOrderSelected">
+      <CollectionView.EmptyView><Label Text="Заявок пока нет. Вернитесь к поиску и выберите мастера." Padding="8" /></CollectionView.EmptyView>
+      <CollectionView.ItemTemplate><DataTemplate x:DataType="{x:Null}">
+        <VerticalStackLayout Padding="8,16" Spacing="8">
+          <Label Text="{Binding Summary}" FontSize="18" />
+          <Label Text="{Binding MasterName, StringFormat='Мастер: {0}'}" />
+          <BoxView HeightRequest="1" Color="#CBD5E1" />
+        </VerticalStackLayout>
+      </DataTemplate></CollectionView.ItemTemplate>
+    </CollectionView>
+  </Grid>
+</ContentPage>

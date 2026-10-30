@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MovieSurvey.MainPage" Title="Киноанкета">
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="12">
+      <Image Source="cinema.png" Aspect="AspectFit" HeightRequest="120" Margin="0,0,0,4" />
+      <Label Text="Что вы любите смотреть?" FontSize="25" FontAttributes="Bold" />
+      <Label Text="Заполните анкету. Имя и возраст обязательны." FontSize="14" FontAttributes="None" />
+      <Entry x:Name="NameEntry" Placeholder="Ваше имя" Keyboard="Text" MaxLength="40" TextChanged="OnAnswerChanged" />
+      <Entry x:Name="AgeEntry" Placeholder="Возраст (от 6 до 100)" Keyboard="Numeric" MaxLength="3" TextChanged="OnAnswerChanged" />
+      <Label Text="Любимый жанр" FontSize="18" FontAttributes="Bold" Margin="0,6,0,0" />
+      <Picker x:Name="GenrePicker" Title="Выберите жанр" SelectedIndexChanged="OnAnswerChanged">
+        <Picker.Items><x:String>Комедия</x:String><x:String>Фантастика</x:String><x:String>Драма</x:String><x:String>Приключения</x:String></Picker.Items>
+      </Picker>
+      <Label Text="Где смотрите чаще?" FontSize="18" FontAttributes="Bold" />
+      <RadioButton x:Name="HomeRadio" Content="Дома" GroupName="Place" Value="Дома" IsChecked="True" CheckedChanged="OnAnswerChanged" />
+      <RadioButton x:Name="CinemaRadio" Content="В кинотеатре" GroupName="Place" Value="В кинотеатре" CheckedChanged="OnAnswerChanged" />
+      <RadioButton x:Name="BothRadio" Content="По-разному" GroupName="Place" Value="По-разному" CheckedChanged="OnAnswerChanged" />
+      <Label Text="Что важно при просмотре?" FontSize="18" FontAttributes="Bold" />
+      <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="4" ColumnSpacing="8">
+        <CheckBox x:Name="SubtitlesCheck" Grid.Row="0" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
+        <Label Grid.Row="0" Grid.Column="1" Text="Субтитры" VerticalOptions="Center" />
+        <CheckBox x:Name="CompanyCheck" Grid.Row="1" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
+        <Label Grid.Row="1" Grid.Column="1" Text="Хорошая компания" VerticalOptions="Center" />
+      </Grid>
+      <HorizontalStackLayout Spacing="12">
+        <Switch x:Name="NewsSwitch" IsToggled="False" OnColor="#6750A4" Toggled="OnAnswerChanged" />
+        <Label Text="Интересны новинки кино" VerticalOptions="Center" />
+      </HorizontalStackLayout>
+      <Label Text="Дата последнего просмотра" FontSize="18" FontAttributes="Bold" />
+      <DatePicker x:Name="WatchDate" Format="dd.MM.yyyy" MinimumDate="01/01/2020" MaximumDate="12/31/2035" Date="10/30/2026" DateSelected="OnAnswerChanged" />
+      <Label Text="Сколько фильмов в месяц?" FontSize="18" FontAttributes="Bold" />
+      <Label Text="{Binding Source={x:Reference FilmsStepper}, Path=Value, Mode=OneWay, StringFormat='Фильмов: {0:F0}'}" />
+      <Stepper x:Name="FilmsStepper" Minimum="1" Maximum="30" Value="2" Increment="1" ValueChanged="OnAnswerChanged" />
+      <Editor x:Name="CommentEditor" Placeholder="Посоветуйте фильм или оставьте комментарий" AutoSize="TextChanges" MaxLength="300" TextChanged="OnAnswerChanged" />
+      <Label x:Name="ReadyLabel" Text="Можно показать результат" TextColor="#28764B" IsVisible="False" />
+      <Label x:Name="ErrorLabel" TextColor="#B3261E" IsVisible="False" />
+      <Button Text="Показать результат" Clicked="OnShowClicked" Margin="0,8,0,0" />
+      <Button Text="Очистить" Clicked="OnClearClicked" BackgroundColor="#E5DDF5" TextColor="#33244F" />
+      <Label x:Name="ResultLabel" IsVisible="False" LineBreakMode="WordWrap" Margin="0,8,0,20" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvoyMaster.MasterPage" Title="Карточка мастера">
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="16">
+      <Label x:Name="NameLabel" FontSize="28" FontAttributes="Bold" />
+      <Label x:Name="ServiceLabel" FontSize="20" />
+      <Label x:Name="AboutLabel" />
+      <Label x:Name="PriceLabel" FontSize="22" TextColor="#2563EB" />
+      <Label Text="В учебном примере указана фиксированная цена описанной услуги." FontSize="14" />
+      <Label x:Name="VerifyLabel" />
+      <Label x:Name="AvailableLabel" />
+      <Button x:Name="RequestButton" Text="Создать заявку" Clicked="OnRequestClicked" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>

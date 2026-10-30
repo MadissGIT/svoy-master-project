@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>СвойМастер — прототип</title>
+<style>
+*{box-sizing:border-box}[hidden]{display:none!important}dialog{border:1px solid #cbd5e1;border-radius:12px;max-width:420px;padding:22px}dialog::backdrop{background:#0f172a55}body{margin:0;background:#e9edf3;color:#1e293b;font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}main{max-width:480px;min-height:100dvh;margin:auto;background:#f8fafc}header{position:sticky;top:0;background:#2563eb;color:white;padding:16px;display:flex;gap:14px;align-items:center;z-index:1}header button{width:auto;background:transparent;padding:4px;margin:0;color:white;border:0;font-size:18px;min-height:36px}h1{font-size:21px;margin:0}h2{font-size:27px;line-height:1.2;margin:14px 0}h3{font-size:20px;margin:8px 0}p{margin:12px 0}.content{padding:20px}button,.button{display:block;width:100%;min-height:48px;background:#2563eb;color:white;padding:12px 16px;border:0;border-radius:10px;font:inherit;text-align:center;cursor:pointer;text-decoration:none;margin:10px 0}button:disabled{opacity:.5;cursor:default}.secondary{background:#e2e8f0;color:#1e293b}.muted{color:#526078;font-size:14px}.error{color:#b3261e;white-space:pre-line}.success{color:#28764b}.row{display:flex;align-items:center;gap:12px;margin:12px 0}.row input{width:22px;height:22px;margin:0}.row label{margin:0}.field{display:block;margin:13px 0 4px}input,select,textarea{width:100%;padding:13px 10px;font:inherit;border:1px solid #aab7c8;border-radius:7px;background:white;color:#1e293b}textarea{min-height:90px;resize:vertical}.item{display:block;text-decoration:none;color:inherit;border-bottom:1px solid #cbd5e1;padding:18px 4px}.item:hover{background:#edf3ff}.price{color:#2563eb;font-size:20px}.empty{padding:18px 4px;color:#526078}.details{white-space:pre-line;overflow-wrap:anywhere}.note{border-left:3px solid #2563eb;padding-left:12px}.hero{padding:16px 0 8px}small{font-size:14px}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}@media(min-width:700px){main{margin:24px auto;min-height:860px;border-radius:16px;overflow:clip;box-shadow:0 8px 40px #14233c20}header{top:0}}
+</style>
+<main><header><button id="back" aria-label="Назад">‹</button><h1 id="title">СвойМастер</h1></header><div id="view" class="content"></div></main>
+<dialog id="confirmation"><p id="confirmationText"></p><form method="dialog"><button value="yes">Подтвердить</button><button value="no" class="secondary">Назад</button></form></dialog>
+<script>
+'use strict';
+const key='svoymaster-prototype-v1';
+const seed=()=>({nextId:1,orders:[],masters:[
+ {id:1,name:'Алексей',service:'Сантехника',price:1500,about:'Замена смесителя и мелкий ремонт сантехники.',available:true,verified:false},
+ {id:2,name:'Ирина',service:'Уборка',price:2000,about:'Уборка квартиры до 40 м².',available:true,verified:false},
+ {id:3,name:'Дмитрий',service:'Электрика',price:1200,about:'Замена розетки или выключателя.',available:true,verified:false},
+ {id:4,name:'Сергей',service:'Сборка мебели',price:2500,about:'Сборка небольшого стола или комода.',available:true,verified:false}]});
+let data=seed(),storageWarning='',flash='';
+function ask(message){const d=document.querySelector('#confirmation');document.querySelector('#confirmationText').textContent=message;d.returnValue='no';return new Promise(resolve=>{d.onclose=()=>resolve(d.returnValue==='yes');d.showModal()})}
+try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved&&saved.masters?.length&&Array.isArray(saved.orders))data=saved}catch{storageWarning='Данные не прочитаны. Открыт новый демопример.'}
+const view=document.querySelector('#view');
+const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){try{localStorage.setItem(key,JSON.stringify(data))}catch{storageWarning='Браузер не сохраняет данные. Они доступны до закрытия страницы.'}}
+function go(route){location.hash='/'+route}
+function when(o){return new Date(o.visit).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function heading(text,root=false){document.querySelector('#title').textContent=text;document.querySelector('#back').hidden=root}
+function orderList(orders,master){return orders.length?orders.slice().reverse().map(o=>`<a class="item" href="#/order/${o.id}/${master?'master':'client'}"><strong>№${o.id}: ${esc(o.service)} — ${esc(o.status)}</strong><br>${when(o)}, ${o.price} ₽<br><small>${master?'Клиент: '+esc(o.customer):'Мастер: '+esc(o.masterName)}</small></a>`).join(''):`<p class="empty">${master?'Входящих заявок пока нет. Создайте заявку Алексею в роли клиента.':'Заявок пока нет. Вернитесь к поиску и выберите мастера.'}</p>`}
+function render(){
+ const [route='start',id,mode]=(location.hash.replace(/^#\/?/,'')||'start').split('/');
+ if(route==='start'){
+  heading('СвойМастер',true);
+  view.innerHTML=`<div class="hero"><h2>СвойМастер</h2><p style="font-size:21px">Найдите мастера для дел по дому</p></div><p class="muted note">Учебная версия. Мастера вымышлены. Проверка через Госуслуги и оплата показаны как демонстрация, деньги не списываются.</p><p class="error">${esc(storageWarning)}</p><button id="client">Я клиент</button><button id="master">Я мастер</button><p class="muted">Кабинет мастера открывается для Алексея из раздела «Сантехника». Создайте ему заявку и проверьте обе роли на одном устройстве.</p><button id="reset" class="secondary">Сбросить демоданные</button>`;
+  document.querySelector('#client').onclick=()=>go('search');document.querySelector('#master').onclick=()=>go('cabinet');
+  document.querySelector('#reset').onclick=async()=>{if(await ask('Удалить учебные заявки и вернуть исходных мастеров?')){data=seed();save();render()}};
+ }else if(route==='search'){
+  heading('Поиск мастера');
+  view.innerHTML=`<p class="muted">Екатеринбург · учебный пример</p><label class="field" for="service">Услуга</label><select id="service">${['Все услуги','Сантехника','Электрика','Уборка','Сборка мебели'].map(s=>`<option>${s}</option>`).join('')}</select><label class="field" for="query">Поиск</label><input id="query" placeholder="Имя мастера или услуга" maxlength="50"><div class="row"><input id="available" type="checkbox" checked><label for="available">Только свободные</label></div><a class="button" href="#/orders">Мои заявки</a><div id="results"></div>`;
+  function results(){const q=document.querySelector('#query').value.trim().toLowerCase(),s=document.querySelector('#service').value,available=document.querySelector('#available').checked;const list=data.masters.filter(m=>(s==='Все услуги'||m.service===s)&&(!available||m.available)&&(m.name.toLowerCase().includes(q)||m.service.toLowerCase().includes(q)));document.querySelector('#results').innerHTML=list.length?list.map(m=>`<a class="item" href="#/master/${m.id}"><h3>${esc(m.name)}</h3>${esc(m.service)}<div class="price">Стоимость: ${m.price} ₽</div></a>`).join(''):'<p class="empty">Мастера не найдены. Измените услугу или строку поиска.</p>'}
+  document.querySelector('#query').oninput=results;document.querySelector('#service').onchange=results;document.querySelector('#available').onchange=results;results();
+ }else if(route==='master'){
+  const m=data.masters.find(m=>m.id===Number(id));if(!m){go('search');return}heading('Карточка мастера');
+  view.innerHTML=`<h2>${esc(m.name)}</h2><h3>${esc(m.service)}</h3><p>${esc(m.about)}</p><p class="price">${m.price} ₽</p><p class="muted">В учебном примере указана фиксированная цена описанной услуги.</p><p>${m.verified?'Демо: проверка через Госуслуги пройдена':'Демопроверка не пройдена'}</p><p>${m.available?'Принимает заявки':'Сейчас занят'}</p><button id="request" ${m.available?'':'disabled'}>Создать заявку</button>`;
+  document.querySelector('#request').onclick=()=>go('request/'+m.id);
+ }else if(route==='request'){
+  const m=data.masters.find(m=>m.id===Number(id));if(!m){go('search');return}heading('Новая заявка');
+  const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);const localDate=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;const max=new Date();max.setMonth(max.getMonth()+3);
+  view.innerHTML=`<h3>${esc(m.name)} — ${esc(m.service)}</h3><p>Итого за услугу: ${m.price} ₽</p><form id="form" novalidate><label class="field" for="name">Ваше имя</label><input id="name" maxlength="40" autocomplete="off"><label class="field" for="phone">Телефон, 11 цифр</label><input id="phone" type="tel" maxlength="20" autocomplete="off"><label class="field" for="address">Адрес в Екатеринбурге</label><input id="address" maxlength="120" autocomplete="off"><label class="field" for="date">Дата визита</label><input id="date" type="date" min="${localDate(new Date())}" max="${localDate(max)}" value="${localDate(tomorrow)}"><label class="field" for="time">Время</label><input id="time" type="time" value="12:00"><label class="field" for="comment">Что нужно сделать?</label><textarea id="comment" maxlength="300"></textarea><div class="row"><input type="checkbox" id="autopay"><label for="autopay">Автоплатёж (демо)</label></div><p class="muted">Демооплата сработает после того, как вы подтвердите выполненную работу. Настоящие деньги не списываются.</p><p id="error" class="error" role="alert"></p><button type="submit">Отправить заявку</button></form>`;
+  document.querySelector('#form').onsubmit=e=>{e.preventDefault();const val=s=>document.querySelector('#'+s).value.trim(),phone=val('phone').replace(/\D/g,''),visit=new Date(val('date')+'T'+val('time'));let errors=[];if(!val('name'))errors.push('Введите имя.');if(phone.length!==11)errors.push('Телефон должен содержать 11 цифр.');if(!val('address'))errors.push('Введите адрес.');if(!Number.isFinite(visit.getTime())||visit<=new Date()||val('date')<localDate(new Date())||val('date')>localDate(max))errors.push('Выберите будущее время в пределах трёх месяцев.');if(!m.available)errors.push('Мастер сейчас не принимает заявки.');document.querySelector('#error').textContent=errors.join('\n');if(errors.length)return;data.orders.push({id:data.nextId++,masterId:m.id,masterName:m.name,service:m.service,price:m.price,customer:val('name'),phone,address:val('address'),comment:val('comment'),visit:visit.toISOString(),autoPay:document.querySelector('#autopay').checked,status:'Новая',payment:'Без списания'});save();flash='Заявка отправлена. Ответ мастера пока не получен.';location.replace('#/orders')};
+ }else if(route==='orders'){
+  heading('Мои заявки');view.innerHTML=`<p class="success" role="status">${esc(flash)}</p><p>Нажмите на заявку, чтобы посмотреть детали</p>`+orderList(data.orders,false);flash='';
+ }else if(route==='cabinet'){
+  heading('Кабинет мастера');const m=data.masters[0];
+  view.innerHTML=`<h2>${esc(m.name)}</h2><p>${esc(m.service)}</p><div class="row"><input type="checkbox" id="free" ${m.available?'checked':''}><label for="free">Принимаю новые заявки</label></div><p>${m.verified?'Демо: проверка пройдена':'Демопроверка не пройдена'}</p><button id="verify" ${m.verified?'disabled':''}>Демопроверка через Госуслуги</button><h3>Входящие заявки</h3>${orderList(data.orders.filter(o=>o.masterId===m.id),true)}`;
+  document.querySelector('#free').onchange=e=>{m.available=e.target.checked;save()};document.querySelector('#verify').onclick=async()=>{if(await ask('Настоящего входа в Госуслуги нет. Показать пример успешной проверки?')){m.verified=true;save();render()}};
+ }else if(route==='order'){
+  const o=data.orders.find(o=>o.id===Number(id));if(!o){go('orders');return}const master=mode==='master';heading('Детали заявки');
+  view.innerHTML=`<h2>Заявка №${o.id}</h2><p class="details">${esc(o.service)}\nМастер: ${esc(o.masterName)}\nКлиент: ${esc(o.customer)}\nТелефон: ${esc(o.phone)}\nАдрес: ${esc(o.address)}\nВизит: ${when(o)}\nСтоимость: ${o.price} ₽\nКомментарий: ${esc(o.comment||'Нет')}</p><h3>${esc(o.status)}</h3><p>${esc(o.payment)}<br>Автоплатёж (демо): ${o.autoPay?'Включён':'Выключен'}</p>${o.status==='Новая'?'<p class="muted">Заявка ожидает ответа мастера.</p>':''}${o.status==='Ожидает подтверждения'?'<p class="muted">Мастер отметил работу выполненной. Клиент должен подтвердить результат.</p>':''}<div id="actions"></div><a class="button secondary" href="#/start">К выбору роли</a>`;
+  const actions=document.querySelector('#actions');function action(text,next,confirmation){const b=document.createElement('button');b.textContent=text;b.onclick=async()=>{if(confirmation&&!await ask(confirmation))return;o.status=next;if(next==='Завершена')o.payment=o.autoPay?`Демо: оплачено ${o.price} ₽`:'Оплата при встрече';save();render()};actions.append(b)}
+  if(master&&o.status==='Новая'){action('Принять заявку','Принята');action('Отклонить заявку','Отклонена')}
+  if(master&&o.status==='Принята')action('Работа выполнена','Ожидает подтверждения');
+  if(!master&&o.status==='Ожидает подтверждения')action('Подтвердить выполнение','Завершена','Работа выполнена? При включённом автоплатеже появится учебная отметка об оплате.');
+  if(!master&&['Новая','Принята'].includes(o.status))action('Отменить заявку','Отменена','Отменить эту заявку?');
+ }else{go('start')}
+ window.scrollTo(0,0);
+}
+document.querySelector('#back').onclick=()=>history.length>1?history.back():go('start');
+window.addEventListener('hashchange',render);render();
+</script>
+</html>

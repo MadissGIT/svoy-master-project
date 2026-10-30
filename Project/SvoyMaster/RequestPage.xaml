@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SvoyMaster.RequestPage" Title="Новая заявка">
+  <ScrollView>
+    <VerticalStackLayout Padding="20" Spacing="12">
+      <Label x:Name="MasterLabel" FontSize="21" FontAttributes="Bold" />
+      <Label x:Name="PriceLabel" />
+      <Entry x:Name="NameEntry" Placeholder="Ваше имя" Keyboard="Text" MaxLength="40" />
+      <Entry x:Name="PhoneEntry" Placeholder="Телефон, 11 цифр" Keyboard="Telephone" MaxLength="20" />
+      <Entry x:Name="AddressEntry" Placeholder="Адрес в Екатеринбурге" Keyboard="Text" MaxLength="120" />
+      <Label Text="Дата и время визита" FontAttributes="Bold" />
+      <DatePicker x:Name="VisitDate" Format="dd.MM.yyyy" />
+      <TimePicker x:Name="VisitTime" Format="HH:mm" Time="12:00:00" />
+      <Editor x:Name="CommentEditor" Placeholder="Что нужно сделать?" MaxLength="300" AutoSize="TextChanges" />
+      <HorizontalStackLayout Spacing="10">
+        <Switch x:Name="AutoPaySwitch" IsToggled="False" OnColor="#2563EB" />
+        <Label Text="Автоплатёж (демо)" VerticalOptions="Center" />
+      </HorizontalStackLayout>
+      <Label Text="Демооплата сработает после того, как вы подтвердите выполненную работу. Настоящие деньги не списываются." FontSize="14" />
+      <Label x:Name="ErrorLabel" TextColor="#B3261E" IsVisible="False" />
+      <Button x:Name="SendButton" Text="Отправить заявку" Clicked="OnSendClicked" Margin="0,8" />
+    </VerticalStackLayout>
+  </ScrollView>
+</ContentPage>
