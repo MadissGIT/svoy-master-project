@@ -10,7 +10,7 @@
       <Label x:Name="LoadLabel" FontSize="14" TextColor="#B3261E" />
       <Button Text="Я клиент" Clicked="OnClientClicked" />
       <Button Text="Я мастер" Clicked="OnMasterClicked" />
-      <Label Text="Кабинет мастера открывается для Алексея из раздела «Сантехника». Можно создать ему заявку и проверить обе роли на одном устройстве." FontSize="14" />
+      <Label Text="В кабинете можно выбрать любого мастера. Создайте ему заявку в роли клиента и проверьте её выполнение на одном устройстве." FontSize="14" />
       <Button Text="Сбросить демоданные" Clicked="OnResetClicked" BackgroundColor="#E2E8F0" TextColor="#1E293B" />
     </VerticalStackLayout>
   </ScrollView>
