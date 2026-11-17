@@ -10,8 +10,8 @@ for app in moviesurvey svoymaster; do
   adb shell monkey -p "$package" -c android.intent.category.LAUNCHER 1
   ready=false
   for attempt in $(seq 1 30); do
-    if adb shell uiautomator dump /sdcard/window.xml >/dev/null 2>&1; then
-      adb pull /sdcard/window.xml "artifacts/smoke/$app.xml" >/dev/null
+    if adb shell uiautomator dump /sdcard/window.xml >/dev/null 2>&1 \
+      && adb pull /sdcard/window.xml "artifacts/smoke/$app.xml" >/dev/null 2>&1; then
       if grep -q "package=\"$package\"" "artifacts/smoke/$app.xml"; then
         ready=true
         break
@@ -21,6 +21,7 @@ for app in moviesurvey svoymaster; do
   done
   if [ "$ready" != true ]; then
     adb logcat -d > "artifacts/smoke/$app.log"
+    adb exec-out screencap -p > "artifacts/smoke/$app-failed.png"
     exit 1
   fi
   adb shell pidof "$package"
