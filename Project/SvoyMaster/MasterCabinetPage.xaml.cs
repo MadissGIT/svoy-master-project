@@ -3,13 +3,30 @@ namespace SvoyMaster;
 public partial class MasterCabinetPage : ContentPage
 {
     bool loading;
-    public MasterCabinetPage() { InitializeComponent(); }
+    Master SelectedMaster => (Master)MasterPicker.SelectedItem;
+
+    public MasterCabinetPage()
+    {
+        InitializeComponent();
+        MasterPicker.ItemsSource = AppData.Data.Masters;
+        MasterPicker.SelectedIndex = 0;
+    }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        Refresh();
+    }
+
+    void OnMasterChanged(object sender, EventArgs e)
+    {
+        if (MasterPicker.SelectedItem is Master) Refresh();
+    }
+
+    void Refresh()
+    {
         loading = true;
-        var master = AppData.DemoMaster;
+        var master = SelectedMaster;
         NameLabel.Text = master.Name;
         ServiceLabel.Text = master.Service;
         AvailableSwitch.IsToggled = master.IsAvailable;
@@ -23,7 +40,7 @@ public partial class MasterCabinetPage : ContentPage
     void OnAvailableToggled(object sender, ToggledEventArgs e)
     {
         if (loading) return;
-        AppData.DemoMaster.IsAvailable = e.Value;
+        SelectedMaster.IsAvailable = e.Value;
         AppData.Save();
     }
 
@@ -31,7 +48,7 @@ public partial class MasterCabinetPage : ContentPage
     {
         bool yes = await DisplayAlertAsync("Демонстрация", "Настоящего входа в Госуслуги нет. Показать пример успешной проверки?", "Показать", "Назад");
         if (!yes) return;
-        AppData.DemoMaster.IsVerified = true;
+        SelectedMaster.IsVerified = true;
         AppData.Save();
         VerifyLabel.Text = "Демо: проверка пройдена";
         VerifyButton.IsEnabled = false;

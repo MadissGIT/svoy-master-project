@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Name="_ContentPage1_" xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieSurvey.MainPage" Title="Киноанкета">
-  <ScrollView>
-    <VerticalStackLayout Padding="20" Spacing="12">
-      <Image Source="cinema.png" Aspect="AspectFit" HeightRequest="120" Margin="0,0,0,4" />
-      <Label Text="Что вы любите смотреть?" FontSize="25" FontAttributes="Bold" />
-      <Label Text="Заполните анкету. Имя и возраст обязательны." FontSize="14" FontAttributes="None" />
-      <Entry x:Name="NameEntry" Placeholder="Ваше имя" Keyboard="Text" MaxLength="40" TextChanged="OnAnswerChanged" />
-      <Entry x:Name="AgeEntry" Placeholder="Возраст (от 6 до 100)" Keyboard="Numeric" MaxLength="3" TextChanged="OnAnswerChanged" />
-      <Label Text="Любимый жанр" FontSize="18" FontAttributes="Bold" Margin="0,6,0,0" />
-      <Picker x:Name="GenrePicker" Title="Выберите жанр" SelectedIndexChanged="OnAnswerChanged">
+  <ScrollView x:Name="_ScrollView1_">
+    <VerticalStackLayout x:Name="_VerticalStackLayout1_" Padding="20" Spacing="12">
+      <Image x:Name="_Image1_" Source="cinema.png" Aspect="AspectFit" HeightRequest="120" Margin="0,0,0,4" />
+      <Label x:Name="_Label1_" Text="Что вы любите смотреть?" FontSize="25" FontAttributes="Bold" />
+      <Label x:Name="_Label2_" Text="Заполните анкету. Имя и возраст обязательны." FontSize="14" FontAttributes="None" />
+      <Entry x:Name="_NameEntry_" Placeholder="Ваше имя" Keyboard="Text" MaxLength="40" TextChanged="OnAnswerChanged" />
+      <Entry x:Name="_AgeEntry_" Placeholder="Возраст (от 6 до 100)" Keyboard="Numeric" MaxLength="3" TextChanged="OnAnswerChanged" />
+      <Label x:Name="_Label3_" Text="Любимый жанр" FontSize="18" FontAttributes="Bold" Margin="0,6,0,0" />
+      <Picker x:Name="_GenrePicker_" Title="Выберите жанр" SelectedIndexChanged="OnAnswerChanged">
         <Picker.Items><x:String>Комедия</x:String><x:String>Фантастика</x:String><x:String>Драма</x:String><x:String>Приключения</x:String></Picker.Items>
       </Picker>
-      <Label Text="Где смотрите чаще?" FontSize="18" FontAttributes="Bold" />
-      <RadioButton x:Name="HomeRadio" Content="Дома" GroupName="Place" Value="Дома" IsChecked="True" CheckedChanged="OnAnswerChanged" />
-      <RadioButton x:Name="CinemaRadio" Content="В кинотеатре" GroupName="Place" Value="В кинотеатре" CheckedChanged="OnAnswerChanged" />
-      <RadioButton x:Name="BothRadio" Content="По-разному" GroupName="Place" Value="По-разному" CheckedChanged="OnAnswerChanged" />
-      <Label Text="Что важно при просмотре?" FontSize="18" FontAttributes="Bold" />
-      <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="4" ColumnSpacing="8">
-        <CheckBox x:Name="SubtitlesCheck" Grid.Row="0" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
-        <Label Grid.Row="0" Grid.Column="1" Text="Субтитры" VerticalOptions="Center" />
-        <CheckBox x:Name="CompanyCheck" Grid.Row="1" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
-        <Label Grid.Row="1" Grid.Column="1" Text="Хорошая компания" VerticalOptions="Center" />
+      <Label x:Name="_Label4_" Text="Где смотрите чаще?" FontSize="18" FontAttributes="Bold" />
+      <RadioButton x:Name="_HomeRadio_" Content="Дома" GroupName="Place" Value="Дома" IsChecked="True" CheckedChanged="OnAnswerChanged" />
+      <RadioButton x:Name="_CinemaRadio_" Content="В кинотеатре" GroupName="Place" Value="В кинотеатре" CheckedChanged="OnAnswerChanged" />
+      <RadioButton x:Name="_BothRadio_" Content="По-разному" GroupName="Place" Value="По-разному" CheckedChanged="OnAnswerChanged" />
+      <Label x:Name="_Label5_" Text="Что важно при просмотре?" FontSize="18" FontAttributes="Bold" />
+      <Grid x:Name="_Grid1_" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="4" ColumnSpacing="8">
+        <CheckBox x:Name="_SubtitlesCheck_" Grid.Row="0" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
+        <Label x:Name="_Label6_" Grid.Row="0" Grid.Column="1" Text="Субтитры" VerticalOptions="Center" />
+        <CheckBox x:Name="_CompanyCheck_" Grid.Row="1" Grid.Column="0" IsChecked="False" Color="#6750A4" CheckedChanged="OnAnswerChanged" />
+        <Label x:Name="_Label7_" Grid.Row="1" Grid.Column="1" Text="Хорошая компания" VerticalOptions="Center" />
       </Grid>
-      <HorizontalStackLayout Spacing="12">
-        <Switch x:Name="NewsSwitch" IsToggled="False" OnColor="#6750A4" Toggled="OnAnswerChanged" />
-        <Label Text="Интересны новинки кино" VerticalOptions="Center" />
+      <HorizontalStackLayout x:Name="_HorizontalStackLayout1_" Spacing="12">
+        <Switch x:Name="_NewsSwitch_" IsToggled="False" OnColor="#6750A4" Toggled="OnAnswerChanged" />
+        <Label x:Name="_Label8_" Text="Интересны новинки кино" VerticalOptions="Center" />
       </HorizontalStackLayout>
-      <Label Text="Дата последнего просмотра" FontSize="18" FontAttributes="Bold" />
-      <DatePicker x:Name="WatchDate" Format="dd.MM.yyyy" MinimumDate="01/01/2020" MaximumDate="12/31/2035" Date="10/30/2026" DateSelected="OnAnswerChanged" />
-      <Label Text="Сколько фильмов в месяц?" FontSize="18" FontAttributes="Bold" />
-      <Label Text="{Binding Source={x:Reference FilmsStepper}, Path=Value, Mode=OneWay, StringFormat='Фильмов: {0:F0}'}" />
-      <Stepper x:Name="FilmsStepper" Minimum="1" Maximum="30" Value="2" Increment="1" ValueChanged="OnAnswerChanged" />
-      <Editor x:Name="CommentEditor" Placeholder="Посоветуйте фильм или оставьте комментарий" AutoSize="TextChanges" MaxLength="300" TextChanged="OnAnswerChanged" />
-      <Label x:Name="ReadyLabel" Text="Можно показать результат" TextColor="#28764B" IsVisible="False" />
-      <Label x:Name="ErrorLabel" TextColor="#B3261E" IsVisible="False" />
-      <Button Text="Показать результат" Clicked="OnShowClicked" Margin="0,8,0,0" />
-      <Button Text="Очистить" Clicked="OnClearClicked" BackgroundColor="#E5DDF5" TextColor="#33244F" />
-      <Label x:Name="ResultLabel" IsVisible="False" LineBreakMode="WordWrap" Margin="0,8,0,20" />
+      <Label x:Name="_Label9_" Text="Дата последнего просмотра" FontSize="18" FontAttributes="Bold" />
+      <DatePicker x:Name="_WatchDate_" Format="dd.MM.yyyy" MinimumDate="01/01/2020" MaximumDate="12/31/2035" Date="10/30/2026" DateSelected="OnAnswerChanged" />
+      <Label x:Name="_Label10_" Text="Сколько фильмов в месяц?" FontSize="18" FontAttributes="Bold" />
+      <Label x:Name="_Label11_" Text="{Binding Source={x:Reference _FilmsStepper_}, Path=Value, Mode=OneWay, StringFormat='Фильмов: {0:F0}'}" />
+      <Stepper x:Name="_FilmsStepper_" Minimum="1" Maximum="30" Value="2" Increment="1" ValueChanged="OnAnswerChanged" />
+      <Editor x:Name="_CommentEditor_" Placeholder="Посоветуйте фильм или оставьте комментарий" AutoSize="TextChanges" MaxLength="300" TextChanged="OnAnswerChanged" />
+      <Label x:Name="_ReadyLabel_" Text="Можно показать результат" TextColor="#28764B" IsVisible="False" />
+      <Label x:Name="_ErrorLabel_" TextColor="#B3261E" IsVisible="False" />
+      <Button x:Name="_Button1_" Text="Показать результат" Clicked="OnShowClicked" Margin="0,8,0,0" />
+      <Button x:Name="_Button2_" Text="Очистить" Clicked="OnClearClicked" BackgroundColor="#E5DDF5" TextColor="#33244F" />
+      <Label x:Name="_ResultLabel_" IsVisible="False" LineBreakMode="WordWrap" Margin="0,8,0,20" />
     </VerticalStackLayout>
   </ScrollView>
 </ContentPage>

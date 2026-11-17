@@ -14,7 +14,6 @@ public static class AppData
     const string StorageKey = "svoymaster-demo-v1";
     public static SavedData Data { get; private set; } = CreateDemo();
     public static string LoadMessage { get; private set; } = "";
-    public static Master DemoMaster => Data.Masters[0];
 
     public static void Load()
     {
